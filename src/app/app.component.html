@@ -1,1 +1,11 @@
 <h1>Words App</h1>
+
+<div>
+  <div>
+    <label>Enter Word</label>
+    <input type="text" #myWord placeholder="Word" />
+  </div>
+  <div>
+    <button (click)="createWord(myWord.value)">Create Word</button>
+  </div>
+</div>
