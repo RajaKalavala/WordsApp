@@ -41,4 +41,9 @@ describe('AppComponent', (): void => {
     component.createWord(word);
     expect(service.createWord).toHaveBeenCalledWith(word);
   });
+
+  it(`should call get operation of service on ngOnInit()`, () => {
+    fixture.detectChanges();
+    expect(service.getWords).toHaveBeenCalled();
+  });
 });

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { WordCrudService } from './service/word-crud.service';
 
 @Component({
@@ -6,11 +6,17 @@ import { WordCrudService } from './service/word-crud.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'WordsApp';
   @ViewChild('myWord') word: ElementRef<HTMLInputElement>;
 
+  words = [];
+
   constructor(private wordService: WordCrudService) {}
+
+  ngOnInit(): void {
+    this.words = this.wordService.getWords();
+  }
 
   createWord(value: string) {
     console.log(value);
