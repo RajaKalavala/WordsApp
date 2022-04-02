@@ -1,22 +1,44 @@
-import { TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { WordCrudService } from './service/word-crud.service';
 
-describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [AppComponent],
-    }).compileComponents();
+let component: AppComponent;
+let service: WordCrudService;
+let fixture: ComponentFixture<AppComponent>;
+
+const MockWordCrudService = jasmine.createSpyObj('WordCrudService', [
+  'createWord',
+  'getWords',
+]);
+
+function configureTestBed(): void {
+  TestBed.configureTestingModule({
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+    declarations: [AppComponent],
+    providers: [{ provide: WordCrudService, useValue: MockWordCrudService }],
+  }).compileComponents();
+  fixture = TestBed.createComponent(AppComponent);
+  component = fixture.componentInstance;
+  service = TestBed.inject(WordCrudService);
+}
+
+describe('AppComponent', (): void => {
+  beforeEach(() => {
+    configureTestBed();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it(`should have as title 'WordsApp'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('WordsApp');
+    expect(component.title).toEqual('WordsApp');
+  });
+
+  it(`should call create operation of service on Create button click`, () => {
+    let word = 'Amazing';
+    component.createWord(word);
+    expect(service.createWord).toHaveBeenCalledWith(word);
   });
 });
