@@ -13,4 +13,10 @@ describe('WordCrudService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should create word', () => {
+    let word = 'Amazing';
+    service.createWord(word);
+    expect(service.getWords()).toEqual([word]);
+  });
 });
