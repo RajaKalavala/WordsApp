@@ -9,3 +9,9 @@
     <button (click)="createWord(myWord.value)">Create Word</button>
   </div>
 </div>
+
+<div>
+  <div *ngFor="let word of words">
+    <li>{{ word }}</li>
+  </div>
+</div>
